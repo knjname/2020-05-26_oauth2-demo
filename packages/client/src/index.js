@@ -41,6 +41,30 @@ router.get("/", async (ctx, next) => {
     })}">LOGIN</a>
   </section>  
 
+    <hr />
+
+    <section>
+      <h1>クライアントクレデンシャルズフローの方はこちらでどうぞ</h1>
+      <button id="do_client_credentials">実行</button>
+      <pre id="do_client_credentials_result">
+
+      </pre>
+  
+      <script>
+        document.getElementById("do_client_credentials").onclick = async () => {
+          const result = await fetch("http://localhost:3000/token_endpoint", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "grant_type=client_credentials&client_id=${client_id}&client_secret=SecretPassword"
+          })
+          const tokens = await result.json()
+          document.getElementById("do_client_credentials_result").innerText = JSON.stringify(tokens)
+        }
+      </script>
+    </section>
+
   `;
   next();
 });
